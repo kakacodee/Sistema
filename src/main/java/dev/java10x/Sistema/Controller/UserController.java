@@ -1,8 +1,10 @@
 package dev.java10x.Sistema.Controller;
 
+import ch.qos.logback.core.model.Model;
 import dev.java10x.Sistema.Model.User;
 import dev.java10x.Sistema.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @Autowired
     private User user;
-
     @PostMapping("/post")
     public String Hwp(@RequestBody User body){
         return "Olá, " + user.getNome();
