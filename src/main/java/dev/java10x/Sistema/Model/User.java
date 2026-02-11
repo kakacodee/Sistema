@@ -1,14 +1,17 @@
 package dev.java10x.Sistema.Model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
+@Entity
+@Table(name = "usuarios")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
-    private Integer Id;
+    private Long Id;
     @Setter
     @Getter
     private String nome;

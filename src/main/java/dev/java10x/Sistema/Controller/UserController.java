@@ -1,20 +1,32 @@
 package dev.java10x.Sistema.Controller;
 
-import ch.qos.logback.core.model.Model;
-import dev.java10x.Sistema.Model.User;
-import dev.java10x.Sistema.Repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+import dev.java10x.Sistema.Model.User;
+import dev.java10x.Sistema.interfaces.UserInterface;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping("/Usuario")
 public class UserController {
-    @Autowired
-    private User user;
-    @PostMapping("/post")
-    public String Hwp(@RequestBody User body){
-        return "Olá, " + user.getNome();
+    private final UserInterface userInterface;
+    public UserController(UserInterface userInterface){
+        this.userInterface = userInterface;
+    }
+    @GetMapping
+    public String listar(Model model){
+        model.addAttribute("users", userInterface.findAll());
+        return "usuarios";
+    }
+    @PostMapping
+    public String Salvar(User user){
+        userInterface.save(user);
+        return "redirect:/Usuario";
+    }
+    @GetMapping("/delete/{id}")
+    public String Deletar(@PathVariable Long id){
+        userInterface.deleteById(id);
+        return "redirect:/Usuario";
     }
 }
