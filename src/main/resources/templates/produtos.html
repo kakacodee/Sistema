@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CRUD Produtos</title>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<h1>Cadastro de Produtos</h1>
+
+<form th:action="@{/Produtos}" method="post">
+    Nome: <input type="text" name="nome" required/>
+    Preço: <input type="number" name="preco" required/>
+    Estoque: <input type="number" name="estoque" required/>
+    <button type="submit">Salvar</button>
+</form>
+
+<h2>Lista de Produtos</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Preço</th>
+        <th>Estoque</th>
+        <th>Ações</th>
+    </tr>
+    <tr th:each="produto : ${produtos}">
+        <td th:text="${produto.id}"></td>
+        <td th:text="${produto.nome}"></td>
+        <td th:text="${produto.preco}"></td>
+        <td th:text="${produto.estoque}"></td>
+        <td>
+            <a th:href="@{/Produtos/delete/produto/{id}(id=${produto.id})}">Deletar</a>
+        </td>
+    </tr>
+</table>
+
+<a th:href="@{/Usuarios}">Usuários</a>
+</body>
+</html>
