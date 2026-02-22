@@ -1,11 +1,13 @@
 <!doctype html>
-<html lang="pt-br">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
+    <title>Sistema</title>
 </head>
 <body>
-
+<h1>Bem-vindos ao sistema!</h1>
+<a th:href="@{/Produtos}">Produtos</a>
+<a th:href="@{/Usuario}">Usuário</a>
 </body>
 </html>

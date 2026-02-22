@@ -2,7 +2,7 @@ package dev.java10x.Sistema.Controller;
 
 
 import dev.java10x.Sistema.Model.User;
-import dev.java10x.Sistema.interfaces.UserInterface;
+import dev.java10x.Sistema.repository.UserInterface;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

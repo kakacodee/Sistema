@@ -1,4 +1,4 @@
-package dev.java10x.Sistema.interfaces;
+package dev.java10x.Sistema.repository;
 
 import dev.java10x.Sistema.Model.Funcionarios;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,10 +1,7 @@
 package dev.java10x.Sistema.Controller;
 
 import dev.java10x.Sistema.Model.Produto;
-import dev.java10x.Sistema.Model.User;
-import dev.java10x.Sistema.interfaces.Produtointerface;
-import dev.java10x.Sistema.interfaces.UserInterface;
-import org.springframework.beans.factory.annotation.Autowired;
+import dev.java10x.Sistema.repository.Produtointerface;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProdutoController {
     private final Produtointerface produtointerface;
     public ProdutoController(Produtointerface produtointerface){
+
         this.produtointerface = produtointerface;
     }
     @GetMapping

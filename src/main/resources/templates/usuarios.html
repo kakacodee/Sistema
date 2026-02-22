@@ -10,6 +10,7 @@
 <!-- Formulário para adicionar usuário -->
 <form th:action="@{/Usuario}" method="post">
     Nome: <input type="text" name="nome" required/>
+    E-Mail: <input type="email" name="e-mail" required/>
     Senha: <input type="password" name="senha" required/>
     <button type="submit">Salvar</button>
 </form>
@@ -19,12 +20,14 @@
     <tr>
         <th>ID</th>
         <th>Nome</th>
+        <th>E-Mail</th>
         <th>Senha</th>
         <th>Ações</th>
     </tr>
     <tr th:each="user : ${users}">
         <td th:text="${user.id}"></td>
         <td th:text="${user.nome}"></td>
+        <td th:text="${user.email}"></td>
         <td th:text="${user.senha}"></td>
         <td>
             <a th:href="@{/Usuario/delete/{id}(id=${user.id})}">Deletar</a>

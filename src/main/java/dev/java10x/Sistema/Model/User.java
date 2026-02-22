@@ -18,11 +18,15 @@ public class User {
     @Setter
     @Getter
     private String senha;
+    @Setter
+    @Getter
+    private String email;
 
     public User(){}
-    public User(String nome, String senha){
+    public User(String nome, String senha, String email){
         this.senha = senha;
         this.nome = nome;
+        this.email = email;
 
     }
 
@@ -31,6 +35,7 @@ public class User {
         return "User{" +
                 "nome='" + nome + '\'' +
                 ", senha='" + senha + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
