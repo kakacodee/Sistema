@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -18,10 +19,13 @@ public class Financas {
     private String nome;
     @Getter
     @Setter
-    private float valor;
+    private BigDecimal Valor;
     @Getter
     @Setter
-    private float total;
+    private TipoTransacao Tipo;
+    @Getter
+    @Setter
+    private BigDecimal total;
     @Getter
     @Setter
     private LocalDate data;
