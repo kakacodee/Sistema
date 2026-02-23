@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Finanças</title>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<h1>Finanças</h1>
+
+<form th:action="@{/Financas}" method="post">
+    Nome: <input type="text" name="nome" required/>
+    Valor: <input type="number" step="0.01" name="valor" required/>
+   Tipo: <select id="tipo" name="tipo" required>
+        <option value="ENTRADA">Entrada</option>
+        <option value="SAIDA">Saída</option>
+    </select>
+    Data: <input type="date" name="data" required/>
+    <button type="submit">Salvar</button>
+</form>
+
+<h2>Gastos/Lucros</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Valor</th>
+        <th>Tipo</th>
+        <th>Data</th>
+    </tr>
+    <tr th:each="financa : ${financas}">
+        <td th:text="${financa.id}"></td>
+        <td th:text="${financa.nome}"></td>
+        <td th:text="${financa.valor}"></td>
+        <td th:text="${financa.tipo}"></td>
+        <td th:text="${financa.data}"></td>
+        <td>
+            <a th:href="@{/Financas/delete/{id}(id=${financa.id})}">Deletar</a>
+        </td>
+    </tr>
+</table>
+<p>Saldo atualizado: <span th:text="${resultado}"></span></p>
+
+
+</body>
+</html>

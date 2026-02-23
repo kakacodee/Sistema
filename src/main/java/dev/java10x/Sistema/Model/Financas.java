@@ -19,10 +19,10 @@ public class Financas {
     private String nome;
     @Getter
     @Setter
-    private BigDecimal Valor;
+    private BigDecimal valor;
     @Getter
     @Setter
-    private TipoTransacao Tipo;
+    private TipoTransacao tipo;
     @Getter
     @Setter
     private BigDecimal total;
