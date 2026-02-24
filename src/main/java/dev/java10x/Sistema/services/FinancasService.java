@@ -8,7 +8,9 @@ import java.math.BigDecimal;
 
 @Service
 public class FinancasService {
-    public BigDecimal TratamentoTipoDinheiro(Financas financas, BigDecimal Total){
+
+    /*public BigDecimal TratamentoTipoDinheiro(Financas financas, BigDecimal Total){
+
         if (financas.getValor() == null) {
             throw new IllegalArgumentException("Valor não pode ser nulo");
         }
@@ -29,4 +31,5 @@ public class FinancasService {
         }
         return  Total;
     }
+*/
 }

@@ -26,17 +26,11 @@ public class FinancasController {
         model.addAttribute("financas", financasInterface.findAll());
         return "financas";
     }
+
+
     @PostMapping
     public String Salvar(Financas financas, RedirectAttributes redirectAttributes){
-        BigDecimal totalAtual = financasInterface.findAll()
-                .stream()
-                .map(Financas::getValor)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        financas.setTotal(totalAtual);
-        BigDecimal novoTotal = financasService.TratamentoTipoDinheiro(financas, totalAtual);
-
         financasInterface.save(financas);
-        redirectAttributes.addFlashAttribute("resultado", novoTotal);
         return "redirect:/Financas";
     }
     @GetMapping("/delete/{id}")
