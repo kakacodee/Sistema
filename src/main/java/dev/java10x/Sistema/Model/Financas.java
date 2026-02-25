@@ -25,23 +25,9 @@ public class Financas {
     @Getter
     @Setter
     private TipoTransacao tipo;
-    @Getter
-    @Setter
-    public class Conta {
-        private BigDecimal total = BigDecimal.ZERO;
-        public BigDecimal Saldo(Financas financas){
-            this.total = BigDecimal.ZERO;
-            if(financas.getTipo() == TipoTransacao.ENTRADA){
-                return this.total.add(financas.getValor());
 
-            }
-            else if(financas.getTipo() == TipoTransacao.SAIDA){
 
-                return this.total.subtract(financas.getValor());
-            }
-            return  this.total;
-        }
-    }
+
     @Getter
     @Setter
     private LocalDate data;

@@ -1,4 +1,5 @@
 package dev.java10x.Sistema.Controller;
+import dev.java10x.Sistema.Model.Conta;
 import dev.java10x.Sistema.Model.Financas;
 import dev.java10x.Sistema.repository.FinancasInterface;
 import dev.java10x.Sistema.services.FinancasService;
@@ -29,8 +30,10 @@ public class FinancasController {
 
 
     @PostMapping
-    public String Salvar(Financas financas, RedirectAttributes redirectAttributes){
+    public String Salvar(Financas financas, Conta conta){
+        BigDecimal totalAtual = financasService.TratamentoTipoDinheiro(financas, conta);
         financasInterface.save(financas);
+
         return "redirect:/Financas";
     }
     @GetMapping("/delete/{id}")
