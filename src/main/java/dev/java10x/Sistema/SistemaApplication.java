@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.Scanner;
 @SpringBootApplication
-@EntityScan
+@EntityScan(basePackages = "dev.java10x.Sistema.Model")
 public class SistemaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SistemaApplication.class, args);
