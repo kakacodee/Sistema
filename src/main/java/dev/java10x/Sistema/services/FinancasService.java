@@ -5,6 +5,7 @@ import dev.java10x.Sistema.Model.Financas;
 import dev.java10x.Sistema.Model.TipoTransacao;
 import dev.java10x.Sistema.repository.ContaInterface;
 import dev.java10x.Sistema.repository.FinancasInterface;
+import jakarta.transaction.Transactional;
 import org.hibernate.sql.Delete;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,21 @@ import java.util.Optional;
 public class FinancasService {
 
     private final FinancasInterface financasInterface;
+    private final ContaInterface contaInterface;
 
-    public FinancasService(FinancasInterface financasInterface) {
+    public FinancasService(FinancasInterface financasInterface, ContaInterface contaInterface) {
         this.financasInterface = financasInterface;
+        this.contaInterface = contaInterface;
     }
+    public Conta obterOuCriarConta() {
 
+        return contaInterface.findById(1L)
+                .orElseGet(() -> {
+                    Conta nova = new Conta();
+                    nova.setTotal(BigDecimal.ZERO);
+                    return contaInterface.save(nova);
+                });
+    }
     public BigDecimal TratamentoTipoDinheiro(Financas financas, Conta conta){
         BigDecimal total = conta.getTotal();
         if (financas.getValor() == null) {
@@ -42,25 +53,40 @@ public class FinancasService {
         conta.setTotal(total);
         return  total;
     }
-    public BigDecimal TratarAoDeletar(Financas financas, Conta conta, Long id, ContaInterface contaInterface){
-        Optional<Financas> financaOpt = financasInterface.findById(id);
-        if(financaOpt.isPresent()){
-            Financas financa = financaOpt.get();
-            BigDecimal total = conta.getTotal();
-            if(financas.getTipo() == TipoTransacao.ENTRADA){
-                total = total.subtract(financas.getValor());
-            }
-            else if(financas.getTipo() == TipoTransacao.SAIDA){
-                total = total.add(financas.getValor());
-            }
-
-
-        conta.setTotal(total);
-            financasInterface.deleteById(id);
-            contaInterface.save(conta);
-            return  total;
+    public void TratarAoDeletar(Conta conta, Long id, Financas financas){
+        if (conta == null || financas == null) {
+            throw new IllegalArgumentException("Conta ou transação inválida");
         }
-        return conta.getTotal();
+        BigDecimal totalAtual = conta.getTotal() != null ? conta.getTotal() : BigDecimal.ZERO;
+        BigDecimal valor = financas.getValor() != null ? financas.getValor() : BigDecimal.ZERO;
+        if(financas.getTipo() == TipoTransacao.ENTRADA){
+            totalAtual = totalAtual.subtract(valor);
+        }
+        else if(financas.getTipo() == TipoTransacao.SAIDA){
+            totalAtual = totalAtual.add(valor);
+        }
+        conta.setTotal(totalAtual);
     }
+    public void ApagarTudo(){
+        contaInterface.deleteAll();
+        financasInterface.deleteAll();
+    }
+    @Transactional
+    public void salvarTransacao(Financas financas) {
+        Conta conta = obterOuCriarConta();
 
+        TratamentoTipoDinheiro(financas, conta);
+        contaInterface.save(conta);
+        financasInterface.save(financas);
+    }
+    public void deletar(Long id) {
+        Financas financas = financasInterface.findById(id).orElseThrow(() -> new RuntimeException("Transação não encontrada"));
+
+        Conta conta = contaInterface.findById(1L)
+                .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
+
+        TratarAoDeletar(conta, id, financas);
+        contaInterface.save(conta);
+        financasInterface.delete(financas);
+    }
 }

@@ -40,19 +40,18 @@ public class FinancasController {
 
 
     @PostMapping
-    public String Salvar(Financas financas, Conta conta){
-        conta = contaInterface.findById(1L).orElse(new Conta());
-        BigDecimal totalAtual = financasService.TratamentoTipoDinheiro(financas, conta);
-        financasInterface.save(financas);
-        contaInterface.save(conta);
+    public String Salvar(Financas financas){
+financasService.salvarTransacao(financas);
         return "redirect:/Financas";
     }
     @GetMapping("/delete/{id}")
-    public String Deletar(@PathVariable Long id, Financas financas, Conta conta){
-        financasInterface.deleteById(id);
-        conta = contaInterface.findById(1L) .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
-        contaInterface.save(conta);
-        financasService.TratarAoDeletar(financas, conta, id, contaInterface);
+    public String Deletar(@PathVariable Long id){
+        financasService.deletar(id);
+        return "redirect:/Financas";
+    }
+    @GetMapping("/deleteall")
+    public String DeletarTudo(){
+        financasService.ApagarTudo();
         return "redirect:/Financas";
     }
 }

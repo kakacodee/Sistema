@@ -34,12 +34,14 @@
         <td th:text="${financa.tipo}"></td>
         <td th:text="${financa.data}"></td>
         <td>
-            <a th:href="@{/Financas/delete/{id}(id=${financa.id})}">Deletar</a>
+            <a th:action="@{http://localhost:3002/Financas/delete{id}}" method="get" th:href="@{/Financas/delete/{id}(id=${financa.id})}">Deletar</a>
         </td>
     </tr>
 </table>
 <p>Saldo atualizado: <span th:text="${resultado}"></span></p>
 
-
+<form th:action="@{http://localhost:3002/Financas/deleteall}" method="get">
+    <button type="submit">Apagar tudo</button>
+</form>
 </body>
 </html>
