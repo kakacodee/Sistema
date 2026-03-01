@@ -24,7 +24,7 @@ public class FinancasService {
     }
     public Conta obterOuCriarConta() {
 
-        return contaInterface.findById(1L)
+        return contaInterface.findAll().stream().findFirst()
                 .orElseGet(() -> {
                     Conta nova = new Conta();
                     nova.setTotal(BigDecimal.ZERO);
@@ -68,8 +68,8 @@ public class FinancasService {
         conta.setTotal(totalAtual);
     }
     public void ApagarTudo(){
-        contaInterface.deleteAll();
         financasInterface.deleteAll();
+        contaInterface.deleteAll();
     }
     @Transactional
     public void salvarTransacao(Financas financas) {
@@ -82,8 +82,7 @@ public class FinancasService {
     public void deletar(Long id) {
         Financas financas = financasInterface.findById(id).orElseThrow(() -> new RuntimeException("Transação não encontrada"));
 
-        Conta conta = contaInterface.findById(1L)
-                .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
+        Conta conta = obterOuCriarConta();
 
         TratarAoDeletar(conta, id, financas);
         contaInterface.save(conta);

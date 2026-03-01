@@ -29,9 +29,7 @@ public class FinancasController {
     @GetMapping
     public String listar(Model model){
         model.addAttribute("financas", financasInterface.findAll());
-        BigDecimal resultado = contaInterface.findById(1L)
-                .map(Conta::getTotal)
-                .orElse(BigDecimal.ZERO);
+        BigDecimal resultado = financasService.obterOuCriarConta().getTotal();
 
         model.addAttribute("resultado", resultado);
 
