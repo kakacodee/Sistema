@@ -3,6 +3,7 @@ package dev.java10x.Sistema.Controller;
 
 import dev.java10x.Sistema.Model.User;
 import dev.java10x.Sistema.repository.UserInterface;
+import dev.java10x.Sistema.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,17 +12,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/Usuario")
 public class UserController {
     private final UserInterface userInterface;
-    public UserController(UserInterface userInterface){
+    private final UserService userService;
+    public UserController(UserInterface userInterface, UserService userService){
         this.userInterface = userInterface;
+        this.userService = userService;
     }
     @GetMapping
     public String listar(Model model){
         model.addAttribute("users", userInterface.findAll());
         return "usuarios";
     }
+
     @PostMapping
     public String Salvar(User user){
-        userInterface.save(user);
+        userService.salvarUser(user);
         return "redirect:/Usuario";
     }
     @GetMapping("/delete/{id}")
