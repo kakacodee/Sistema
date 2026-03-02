@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tarefas</title>
+    <meta charset="UTF-8"/>
 </head>
 <body>
+<h1>Tarefas</h1>
+
+<form th:action="@{/Tarefas}" method="post">
+    Nome: <input type="text" name="nome" required/>
+    Descricao: <input type="text" name="descricao" required/>
+    Data de inicio: <input type="date" name="data_inicio" required/>
+    Data de encerramento: <input type="date" name="data_fim" required/>
+    <button type="submit">Salvar</button>
+</form>
+
+<h2>Lista de Tarefas</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Descricao</th>
+        <th>Data de inicio</th>
+        <th> Data de encerramento</th>
+
+    </tr>
+    <tr th:each="tarefa : ${tarefas}">
+        <td th:text="${tarefa.id}"></td>
+        <td th:text="${tarefa.nome}"></td>
+        <td th:text="${tarefa.descricao}"></td>
+        <td th:text="${tarefa.data_inicio}"></td>
+        <td th:text="${tarefa.data_fim}"></td>
+        <td>
+            <a th:href="@{/Tarefas/delete/{id}(id=${tarefa.id})}">Deletar</a>
+        </td>
+    </tr>
+</table>
+<form th:action="@{http://localhost:3002/Tarefas/deleteall}" method="get">
+    <button type="submit">Apagar tudo</button>
+</form>
 
 </body>
 </html>

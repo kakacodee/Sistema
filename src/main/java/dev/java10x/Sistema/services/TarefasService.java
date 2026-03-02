@@ -3,7 +3,9 @@ package dev.java10x.Sistema.services;
 import dev.java10x.Sistema.Model.Tarefas;
 import dev.java10x.Sistema.repository.TarefasInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TarefasService {
 
     private final TarefasInterface tarefasInterface;

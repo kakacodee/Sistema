@@ -1,0 +1,47 @@
+package dev.java10x.Sistema.Controller;
+
+
+import dev.java10x.Sistema.Model.Tarefas;
+import dev.java10x.Sistema.repository.TarefasInterface;
+import dev.java10x.Sistema.services.FinancasService;
+import dev.java10x.Sistema.services.TarefasService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/Tarefas")
+public class TarefasController {
+    private final TarefasInterface tarefasInterface;
+    private final TarefasService tarefasService;
+
+
+    public TarefasController( TarefasInterface tarefasInterface, TarefasService tarefasService, FinancasService financasService){
+        this.tarefasInterface = tarefasInterface;
+        this.tarefasService = tarefasService;
+
+    }
+    @PostMapping
+    public String salvar(Tarefas tarefas){
+        tarefasService.SalvarTarefas(tarefas);
+        return "redirect:/Tarefas";
+    }
+    @GetMapping
+    public String listar(Model model){
+        model.addAttribute("tarefas", tarefasInterface.findAll());
+        return "tarefas";
+    }
+    @GetMapping("/delete/{id}")
+    public String Deletar(@PathVariable Long id, Tarefas tarefas){
+        tarefasService.DeleteTarefas(tarefas, id);
+        return "redirect:/Tarefas";
+    }
+    @GetMapping("/deleteall")
+    public String DeletarTudo(){
+        tarefasService.DeleteTodasTarefas();
+        return "redirect:/Tarefas";
+    }
+}
