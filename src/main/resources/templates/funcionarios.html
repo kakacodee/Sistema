@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tarefas</title>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<h1>Funcionários</h1>
+
+<form th:action="@{/Funcionarios}" method="post">
+    Nome: <input type="text" name="nome" required/>
+    Data de Nascimento: <input type="date" name="data_nascimento" required/>
+    Cargo: <input type="text" name="cargo" required/>
+    Salário: <input type="number" name="salario" required/>
+    <button type="submit">Salvar</button>
+</form>
+
+<h2>Lista de Funcionarios</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Data de Nascimento</th>
+        <th> Cargo</th>
+        <th>Salário</th>
+
+    </tr>
+    <tr th:each="func : ${funcionarios}">
+        <td th:text="${func.id}"></td>
+        <td th:text="${func.nome}"></td>
+        <td th:text="${func.data_nascimento}"></td>
+        <td th:text="${func.cargo}"></td>
+        <td th:text="${func.salario}"></td>
+        <td>
+            <a th:href="@{/Funcionarios/delete/{id}(id=${func.id})}">Deletar</a>
+        </td>
+    </tr>
+</table>
+<form th:action="@{http://localhost:3002/Funcionarios/deleteall}" method="get">
+    <button type="submit">Apagar tudo</button>
+</form>
+
+</body>
+</html>

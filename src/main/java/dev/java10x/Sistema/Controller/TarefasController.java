@@ -2,6 +2,7 @@ package dev.java10x.Sistema.Controller;
 
 
 import dev.java10x.Sistema.Model.Tarefas;
+import dev.java10x.Sistema.repository.FinancasInterface;
 import dev.java10x.Sistema.repository.TarefasInterface;
 import dev.java10x.Sistema.services.FinancasService;
 import dev.java10x.Sistema.services.TarefasService;
@@ -17,12 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TarefasController {
     private final TarefasInterface tarefasInterface;
     private final TarefasService tarefasService;
+    private final FinancasInterface financasInterface;
 
 
-    public TarefasController( TarefasInterface tarefasInterface, TarefasService tarefasService, FinancasService financasService){
+    public TarefasController(TarefasInterface tarefasInterface, TarefasService tarefasService, FinancasService financasService, FinancasInterface financasInterface){
         this.tarefasInterface = tarefasInterface;
         this.tarefasService = tarefasService;
-
+        this.financasInterface = financasInterface;
     }
     @PostMapping
     public String salvar(Tarefas tarefas){
