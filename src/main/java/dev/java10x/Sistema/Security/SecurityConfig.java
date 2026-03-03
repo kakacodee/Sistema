@@ -18,6 +18,7 @@ public class SecurityConfig {
                         auth.requestMatchers("/cadastro").permitAll()
                                 .anyRequest().authenticated()).formLogin(form -> form
                         .defaultSuccessUrl("/index", true)
+
                 );
         return http.build();
     }
