@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sistema</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1 class="title">Bem-vindos ao sistema!</h1>
-<a th:href="@{/Produtos}">Produtos</a>
-<a th:href="@{/Usuario}">Usuário</a>
-<a th:href="@{/Financas}">Finanças</a>
-<a th:href="@{/Tarefas}">Tarefas</a>
-<a th:href="@{/Funcionarios}">Funcionários</a>
+<h1 class="text-center my-4">Bem-vindos ao sistema!</h1>
+<nav class="nav justify-content-center mb-4">
+<a class="btn btn-primary mx-2" th:href="@{/Produtos}">Produtos</a>
+<a class="btn btn-primary mx-2" th:href="@{/Usuario}">Usuário</a>
+<a class="btn btn-primary mx-2" th:href="@{/Financas}">Finanças</a>
+<a class="btn btn-primary mx-2" th:href="@{/Tarefas}">Tarefas</a>
+<a class="btn btn-primary mx-2" th:href="@{/Funcionarios}">Funcionários</a>
+</nav>
+<script src="https://cdn.jsdelivr.net/npm/bootstrapcomo"></script>
+
 </body>
 </html>
