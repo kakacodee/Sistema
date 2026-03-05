@@ -22,12 +22,16 @@ public class User {
     @Getter
     @Column(unique = true)
     private String email;
-
+    @Getter
+    @Setter
+    @Enumerated(EnumType.ORDINAL)
+    private Papel papel;
     public User(){}
-    public User(String nome, String senha, String email){
+    public User(String nome, String senha, String email, Papel papel){
         this.senha = senha;
         this.nome = nome;
         this.email = email;
+        this.papel = papel;
 
     }
 

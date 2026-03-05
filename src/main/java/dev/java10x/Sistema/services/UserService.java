@@ -26,13 +26,14 @@ public void salvarUser(User user){
         userInterface.save(user);
 }
 
-
+@Override
 public  UserDetails loadUserByUsername(String username){
    User user = userInterface.findByEmail(username).orElseThrow(() ->
             new UsernameNotFoundException("Usuário não encontrado"));
     return org.springframework.security.core.userdetails.User
             .withUsername(user.getEmail())
             .password(user.getSenha())
+            .roles(user.getPapel().name())
             .build();
 }
 }

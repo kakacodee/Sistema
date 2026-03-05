@@ -7,10 +7,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/index")
+
 public class InitialController {
-    @GetMapping
+    @GetMapping("/index")
     public String welcome(){
+
         return "index";
+    }
+    @GetMapping("/indexFuncionario")
+    public String welcomeFu(){
+
+        return "indexFuncionario";
+    }
+    @GetMapping("/indexFornecedor")
+    public String welcomeFo(){
+
+        return "indexFornecedor";
     }
 }
