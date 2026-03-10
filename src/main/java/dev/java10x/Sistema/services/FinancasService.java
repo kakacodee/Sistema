@@ -2,6 +2,7 @@ package dev.java10x.Sistema.services;
 
 import dev.java10x.Sistema.Model.Conta;
 import dev.java10x.Sistema.Model.Financas;
+import dev.java10x.Sistema.Model.Funcionarios;
 import dev.java10x.Sistema.Model.TipoTransacao;
 import dev.java10x.Sistema.repository.ContaInterface;
 import dev.java10x.Sistema.repository.FinancasInterface;
@@ -10,6 +11,8 @@ import org.hibernate.sql.Delete;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -17,12 +20,15 @@ public class FinancasService {
 
     private final FinancasInterface financasInterface;
     private final ContaInterface contaInterface;
+    private final Funcionarios funcionarios;
 
-    public FinancasService(FinancasInterface financasInterface, ContaInterface contaInterface) {
+    public FinancasService(FinancasInterface financasInterface, ContaInterface contaInterface, Funcionarios funcionarios) {
         this.financasInterface = financasInterface;
         this.contaInterface = contaInterface;
+        this.funcionarios = funcionarios;
     }
-    public Conta obterOuCriarConta() {
+    public Conta obterOuCriarConta()
+    {
 
         return contaInterface.findAll().stream().findFirst()
                 .orElseGet(() -> {
@@ -66,6 +72,12 @@ public class FinancasService {
             totalAtual = totalAtual.add(valor);
         }
         conta.setTotal(totalAtual);
+    }
+    public void AdicionarSalarioFuncionario(Financas financas, Funcionarios funcionarios){
+        financas.setData(LocalDate.now());
+        financas.setNome(funcionarios.getNome());
+        financas.setValor(BigDecimal.valueOf(funcionarios.getSalario()));
+        financas.setTipo(TipoTransacao.SAIDA);
     }
     public void ApagarTudo(){
         financasInterface.deleteAll();
