@@ -1,6 +1,7 @@
 package dev.java10x.Sistema.Controller;
 
 
+import dev.java10x.Sistema.Model.Status;
 import dev.java10x.Sistema.Model.Tarefas;
 import dev.java10x.Sistema.repository.FinancasInterface;
 import dev.java10x.Sistema.repository.TarefasInterface;
@@ -13,18 +14,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/Tarefas")
 public class TarefasController {
     private final TarefasInterface tarefasInterface;
     private final TarefasService tarefasService;
-    private final FinancasInterface financasInterface;
 
 
-    public TarefasController(TarefasInterface tarefasInterface, TarefasService tarefasService, FinancasService financasService, FinancasInterface financasInterface){
+
+    public TarefasController(TarefasInterface tarefasInterface, TarefasService tarefasService){
         this.tarefasInterface = tarefasInterface;
         this.tarefasService = tarefasService;
-        this.financasInterface = financasInterface;
+
     }
     @PostMapping
     public String salvar(Tarefas tarefas){
@@ -33,7 +36,10 @@ public class TarefasController {
     }
     @GetMapping
     public String listar(Model model){
-        model.addAttribute("tarefas", tarefasInterface.findAll());
+        List<Tarefas> emAndamento = tarefasInterface.findByStatus(Status.EM_ANDAMENTO);
+        List<Tarefas> concluido = tarefasInterface.findByStatus(Status.CONCLUIDO);
+        model.addAttribute("emAndamento", emAndamento);
+        model.addAttribute("concluido", concluido);
         return "tarefas";
     }
     @GetMapping("/delete/{id}")

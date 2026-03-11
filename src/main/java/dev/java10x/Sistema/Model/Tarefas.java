@@ -27,6 +27,5 @@ public class Tarefas {
     private LocalDate data_fim;
     @Getter
     @Setter
-    @Enumerated(EnumType.ORDINAL)
     private Status status;
 }
