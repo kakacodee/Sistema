@@ -24,6 +24,8 @@ public class SecurityConfig {
                         auth.requestMatchers("/cadastro").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll()
                         .successHandler(acessConfig)
                 )
                 .logout(withDefaults());

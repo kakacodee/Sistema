@@ -1,8 +1,11 @@
 package dev.java10x.Sistema.Controller;
 
+import dev.java10x.Sistema.Model.Conta;
+import dev.java10x.Sistema.Model.Financas;
 import dev.java10x.Sistema.Model.Funcionarios;
 import dev.java10x.Sistema.Model.Tarefas;
 import dev.java10x.Sistema.repository.FuncionariosInterface;
+import dev.java10x.Sistema.services.FinancasService;
 import dev.java10x.Sistema.services.FuncionariosService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +19,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class FuncionariosController {
     private final FuncionariosInterface funcionariosInterface;
     private final FuncionariosService funcionariosService;
-    public FuncionariosController(FuncionariosInterface funcionariosInterface, FuncionariosService funcionariosService){
+    private final FinancasService financasService;
+    public FuncionariosController(FuncionariosInterface funcionariosInterface, FuncionariosService funcionariosService, FinancasService financasService){
         this.funcionariosInterface = funcionariosInterface;
         this.funcionariosService = funcionariosService;
+        this.financasService = financasService;
     }
     @PostMapping
-    public String salvar(Funcionarios funcionarios){
+    public String salvar(Financas financas, Funcionarios funcionarios, Conta conta){
         funcionariosService.SalvarFuncionarios(funcionarios);
+
+        financasService.AdicionarSalarioFuncionario(financas, funcionarios);
         return "redirect:/Funcionarios";
     }
     @GetMapping

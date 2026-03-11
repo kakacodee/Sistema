@@ -8,40 +8,71 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
 </head>
-<body>
-<h1>Tarefas</h1>
+<body class="bg-light">
 
-<form th:action="@{/Tarefas}" method="post">
-    Nome: <input type="text" name="nome" required/>
-    Descricao: <input type="text" name="descricao" required/>
-    Data de inicio: <input type="date" name="data_inicio" required/>
-    Data de encerramento: <input type="date" name="data_fim" required/>
-    <button type="submit">Salvar</button>
-</form>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Cadastro de Tarefas</h1>
+    <button class="btn btn-secondary" onclick="history.back()">Voltar</button>
 
-<h2>Lista de Tarefas</h2>
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Descricao</th>
-        <th>Data de inicio</th>
-        <th> Data de encerramento</th>
+    <!-- Formulário -->
+    <form th:action="@{/Tarefas}" method="post" class="card p-4 shadow-sm mb-5">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" id="nome" name="nome" class="form-control" required>
+        </div>
 
-    </tr>
-    <tr th:each="tarefa : ${tarefas}">
-        <td th:text="${tarefa.id}"></td>
-        <td th:text="${tarefa.nome}"></td>
-        <td th:text="${tarefa.descricao}"></td>
-        <td th:text="${tarefa.data_inicio}"></td>
-        <td th:text="${tarefa.data_fim}"></td>
-        <td>
-            <a th:href="@{/Tarefas/delete/{id}(id=${tarefa.id})}">Deletar</a>
-        </td>
-    </tr>
-</table>
-<form th:action="@{http://localhost:3002/Tarefas/deleteall}" method="get">
-    <button type="submit">Apagar tudo</button>
-</form>
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição</label>
+            <input type="text" id="descricao" name="descricao" class="form-control" required>
+        </div>
 
+        <div class="mb-3">
+            <label for="data_inicio" class="form-label">Data de Início</label>
+            <input type="date" id="data_inicio" name="data_inicio" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="data_fim" class="form-label">Data de Encerramento</label>
+            <input type="date" id="data_fim" name="data_fim" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">Salvar</button>
+    </form>
+
+    <!-- Lista de Tarefas -->
+    <h2 class="mb-3">Lista de Tarefas</h2>
+    <table class="table table-striped table-hover shadow-sm">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Data de Início</th>
+            <th>Data de Encerramento</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tarefa : ${tarefas}">
+            <td th:text="${tarefa.id}"></td>
+            <td th:text="${tarefa.nome}"></td>
+            <td th:text="${tarefa.descricao}"></td>
+            <td th:text="${tarefa.data_inicio}"></td>
+            <td th:text="${tarefa.data_fim}"></td>
+            <td>
+                <a th:href="@{/Tarefas/delete/{id}(id=${tarefa.id})}"
+                   class="btn btn-danger btn-sm">Deletar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Botão apagar tudo -->
+    <form th:action="@{http://localhost:3002/Tarefas/deleteall}" method="get">
+        <button type="submit" class="btn btn-outline-danger">Apagar tudo</button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

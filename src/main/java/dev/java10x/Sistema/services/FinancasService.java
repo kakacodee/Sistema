@@ -6,6 +6,7 @@ import dev.java10x.Sistema.Model.Funcionarios;
 import dev.java10x.Sistema.Model.TipoTransacao;
 import dev.java10x.Sistema.repository.ContaInterface;
 import dev.java10x.Sistema.repository.FinancasInterface;
+import dev.java10x.Sistema.repository.FuncionariosInterface;
 import jakarta.transaction.Transactional;
 import org.hibernate.sql.Delete;
 import org.springframework.stereotype.Service;
@@ -20,12 +21,12 @@ public class FinancasService {
 
     private final FinancasInterface financasInterface;
     private final ContaInterface contaInterface;
-    private final Funcionarios funcionarios;
+    private final FuncionariosInterface funcionariosInterface;
 
-    public FinancasService(FinancasInterface financasInterface, ContaInterface contaInterface, Funcionarios funcionarios) {
+    public FinancasService(FinancasInterface financasInterface, ContaInterface contaInterface, FuncionariosInterface funcionariosInterface) {
         this.financasInterface = financasInterface;
         this.contaInterface = contaInterface;
-        this.funcionarios = funcionarios;
+        this.funcionariosInterface = funcionariosInterface;
     }
     public Conta obterOuCriarConta()
     {
@@ -47,7 +48,8 @@ public class FinancasService {
             throw new IllegalArgumentException("Tipo da transação não pode ser nulo");
         }
         if(total.compareTo(financas.getValor()) < 0 && financas.getTipo() == TipoTransacao.SAIDA){
-            throw new RuntimeException("Saldo insuficiente");
+            total = total.subtract(financas.getValor());
+
         }
 
         if(financas.getTipo() == TipoTransacao.ENTRADA){
@@ -73,11 +75,18 @@ public class FinancasService {
         }
         conta.setTotal(totalAtual);
     }
-    public void AdicionarSalarioFuncionario(Financas financas, Funcionarios funcionarios){
+    public Financas AdicionarSalarioFuncionario(Financas financas, Funcionarios funcionarios){
+        Conta conta = obterOuCriarConta();
+        BigDecimal total = conta.getTotal();
         financas.setData(LocalDate.now());
         financas.setNome(funcionarios.getNome());
-        financas.setValor(BigDecimal.valueOf(funcionarios.getSalario()));
-        financas.setTipo(TipoTransacao.SAIDA);
+            financas.setValor(BigDecimal.valueOf(funcionarios.getSalario()));
+            financas.setTipo(TipoTransacao.SAIDA);
+            total = total.subtract(BigDecimal.valueOf(funcionarios.getSalario()));
+            conta.setTotal(total);
+            contaInterface.save(conta);
+            financasInterface.save(financas);
+            return financas;
     }
     public void ApagarTudo(){
         financasInterface.deleteAll();
