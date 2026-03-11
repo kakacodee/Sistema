@@ -35,12 +35,20 @@
             <label for="data_fim" class="form-label">Data de Encerramento</label>
             <input type="date" id="data_fim" name="data_fim" class="form-control" required>
         </div>
+        <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select id="status" name="status" class="form-select" required>
+                <option value="EM_ANDAMENTO">Em Andamento</option>
+                <option value="CONCLUIDO">Concluído</option>
 
+            </select>
+        </div>
         <button type="submit" class="btn btn-success w-100">Salvar</button>
     </form>
 
     <!-- Lista de Tarefas -->
-    <h2 class="mb-3">Lista de Tarefas</h2>
+    <div th:if="${tarefas.status == Status.EM_ANDAMENTO}">
+    <h2 class="mb-3">Em Andamento</h2>
     <table class="table table-striped table-hover shadow-sm">
         <thead class="table-dark">
         <tr>
@@ -49,6 +57,7 @@
             <th>Descrição</th>
             <th>Data de Início</th>
             <th>Data de Encerramento</th>
+            <th>Status</th>
             <th>Ações</th>
         </tr>
         </thead>
@@ -59,6 +68,7 @@
             <td th:text="${tarefa.descricao}"></td>
             <td th:text="${tarefa.data_inicio}"></td>
             <td th:text="${tarefa.data_fim}"></td>
+            <td th:text="${tarefa.status}"></td>
             <td>
                 <a th:href="@{/Tarefas/delete/{id}(id=${tarefa.id})}"
                    class="btn btn-danger btn-sm">Deletar</a>
@@ -66,7 +76,37 @@
         </tr>
         </tbody>
     </table>
-
+    </div>
+    <div th:if="${tarefas.status == Status.CONCLUIDO}">
+        <h2 class="mb-3">Concluído</h2>
+        <table class="table table-striped table-hover shadow-sm">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Data de Início</th>
+                <th>Data de Encerramento</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tarefa : ${tarefas}">
+                <td th:text="${tarefa.id}"></td>
+                <td th:text="${tarefa.nome}"></td>
+                <td th:text="${tarefa.descricao}"></td>
+                <td th:text="${tarefa.data_inicio}"></td>
+                <td th:text="${tarefa.data_fim}"></td>
+                <td th:text="${tarefa.status}"></td>
+                <td>
+                    <a th:href="@{/Tarefas/delete/{id}(id=${tarefa.id})}"
+                       class="btn btn-danger btn-sm">Deletar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
     <!-- Botão apagar tudo -->
     <form th:action="@{http://localhost:3002/Tarefas/deleteall}" method="get">
         <button type="submit" class="btn btn-outline-danger">Apagar tudo</button>
