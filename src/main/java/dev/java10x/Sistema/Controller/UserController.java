@@ -4,15 +4,19 @@ package dev.java10x.Sistema.Controller;
 import dev.java10x.Sistema.Model.User;
 import dev.java10x.Sistema.repository.UserInterface;
 import dev.java10x.Sistema.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.jdbc.core.JdbcTemplate;
 @Controller
 @RequestMapping("/Usuario")
 public class UserController {
     private final UserInterface userInterface;
     private final UserService userService;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
     public UserController(UserInterface userInterface, UserService userService){
         this.userInterface = userInterface;
         this.userService = userService;
@@ -31,6 +35,7 @@ public class UserController {
     @GetMapping("/delete/{id}")
     public String Deletar(@PathVariable Long id){
         userInterface.deleteById(id);
+        jdbcTemplate.execute("alter table financas_funcionario AUTO_INCREMENT = 1");
         return "redirect:/Usuario";
     }
 }

@@ -9,20 +9,23 @@ import dev.java10x.Sistema.repository.FinancasInterface;
 import dev.java10x.Sistema.repository.FuncionariosInterface;
 import jakarta.transaction.Transactional;
 import org.hibernate.sql.Delete;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
-
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.jdbc.core.JdbcTemplate;
 @Service
 public class FinancasService {
 
     private final FinancasInterface financasInterface;
     private final ContaInterface contaInterface;
     private final FuncionariosInterface funcionariosInterface;
-
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
     public FinancasService(FinancasInterface financasInterface, ContaInterface contaInterface, FuncionariosInterface funcionariosInterface) {
         this.financasInterface = financasInterface;
         this.contaInterface = contaInterface;
@@ -92,6 +95,7 @@ public class FinancasService {
     public void ApagarTudo(){
         financasInterface.deleteAll();
         contaInterface.deleteAll();
+        jdbcTemplate.execute("alter table financas_funcionario AUTO_INCREMENT = 1");
     }
     @Transactional
     public void salvarTransacao(Financas financas) {
@@ -110,5 +114,6 @@ public class FinancasService {
         TratarAoDeletar(conta, id, financas);
         contaInterface.save(conta);
         financasInterface.delete(financas);
+        jdbcTemplate.execute("alter table financas_funcionario AUTO_INCREMENT = 1");
     }
 }
