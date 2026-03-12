@@ -45,6 +45,7 @@ public class TarefasController {
     @GetMapping("/delete/{id}")
     public String Deletar(@PathVariable Long id, Tarefas tarefas){
         tarefasService.DeleteTarefas(tarefas, id);
+
         return "redirect:/Tarefas";
     }
     @GetMapping("/deleteall")

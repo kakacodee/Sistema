@@ -88,6 +88,7 @@ public class FinancasService {
             financasInterface.save(financas);
             return financas;
     }
+    @Transactional
     public void ApagarTudo(){
         financasInterface.deleteAll();
         contaInterface.deleteAll();
@@ -100,6 +101,7 @@ public class FinancasService {
         contaInterface.save(conta);
         financasInterface.save(financas);
     }
+    @Transactional
     public void deletar(Long id) {
         Financas financas = financasInterface.findById(id).orElseThrow(() -> new RuntimeException("Transação não encontrada"));
 

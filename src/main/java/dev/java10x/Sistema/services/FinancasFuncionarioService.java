@@ -65,6 +65,7 @@ public class FinancasFuncionarioService {
         }
         contaFuncionario.setTotal(totalAtual);
     }
+    @org.springframework.transaction.annotation.Transactional
     public void ApagarTudo(){
         financasFuncionarioInterface.deleteAll();
         contaFuncionarioInterface.deleteAll();
@@ -77,6 +78,7 @@ public class FinancasFuncionarioService {
         contaFuncionarioInterface.save(contaFuncionario);
         financasFuncionarioInterface.save(financasFuncionario);
     }
+    @Transactional
     public void deletar(Long id) {
         FinancasFuncionario financasFuncionario = financasFuncionarioInterface.findById(id).orElseThrow(() -> new RuntimeException("Transação não encontrada"));
 
