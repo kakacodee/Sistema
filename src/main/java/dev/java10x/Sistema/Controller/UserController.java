@@ -35,7 +35,7 @@ public class UserController {
     @GetMapping("/delete/{id}")
     public String Deletar(@PathVariable Long id){
         userInterface.deleteById(id);
-        return "redirect:/Usuario";
         jdbcTemplate.execute("alter table financas_funcionario AUTO_INCREMENT = 1");
+        return "redirect:/Usuario";
     }
 }
