@@ -6,16 +6,20 @@ import dev.java10x.Sistema.repository.ContaFuncionarioInterface;
 import dev.java10x.Sistema.repository.FinancasFuncionarioInterface;
 import dev.java10x.Sistema.repository.FinancasInterface;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 @Service
 public class FinancasFuncionarioService {
 
     private final FinancasFuncionarioInterface financasFuncionarioInterface;
     private final ContaFuncionarioInterface contaFuncionarioInterface;
-
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
     public FinancasFuncionarioService(FinancasFuncionarioInterface financasFuncionarioInterface, ContaFuncionarioInterface contaFuncionarioInterface) {
         this.financasFuncionarioInterface = financasFuncionarioInterface;
         this.contaFuncionarioInterface = contaFuncionarioInterface;
@@ -68,6 +72,7 @@ public class FinancasFuncionarioService {
     public void ApagarTudo(){
         financasFuncionarioInterface.deleteAll();
         contaFuncionarioInterface.deleteAll();
+        jdbcTemplate.execute("alter table financas_funcionario AUTO_INCREMENT = 1");
     }
     @Transactional
     public void salvarTransacao(FinancasFuncionario financasFuncionario) {
@@ -84,6 +89,8 @@ public class FinancasFuncionarioService {
 
         TratarAoDeletar(contaFuncionario, id, financasFuncionario);
         contaFuncionarioInterface.save(contaFuncionario);
+
         financasFuncionarioInterface.delete(financasFuncionario);
+        jdbcTemplate.execute("alter table financas_funcionario AUTO_INCREMENT = 1");
     }
 }
