@@ -74,6 +74,7 @@ public class FinancasFuncionarioService {
         financasFuncionarioInterface.deleteAll();
         contaFuncionarioInterface.deleteAll();
         jdbcTemplate.execute("alter table financas_funcionario AUTO_INCREMENT = 1");
+        jdbcTemplate.execute("ALTER TABLE conta_funcionario AUTO_INCREMENT = 1");
     }
     @Transactional
     public void salvarTransacao(FinancasFuncionario financasFuncionario) {

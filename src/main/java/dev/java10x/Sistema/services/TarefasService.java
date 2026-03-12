@@ -24,12 +24,12 @@ public class TarefasService {
     @Transactional
     public void DeleteTarefas(Tarefas tarefas, Long id){
         tarefasInterface.deleteById(id);
-        jdbcTemplate.execute("alter table financas_funcionario AUTO_INCREMENT = 1");
+        jdbcTemplate.execute("alter table tarefas AUTO_INCREMENT = 1");
     }
     @Transactional
     public void DeleteTodasTarefas(){
         tarefasInterface.deleteAll();
-        jdbcTemplate.execute("alter table financas_funcionario AUTO_INCREMENT = 1");
+        jdbcTemplate.execute("alter table tarefas AUTO_INCREMENT = 1");
     }
 
 

@@ -26,13 +26,13 @@ public class FuncionariosService {
     public void DeleteFuncionarios(Long id){
 
         funcionariosInterface.deleteById(id);
-        jdbcTemplate.execute("alter table financas_funcionario AUTO_INCREMENT = 1");
+        jdbcTemplate.execute("alter table funcionarios AUTO_INCREMENT = 1");
     }
     @Transactional
     public void DeleteTodosFuncionarios(){
 
         funcionariosInterface.deleteAll();
-        jdbcTemplate.execute("alter table financas_funcionario AUTO_INCREMENT = 1");
+        jdbcTemplate.execute("alter table funcionarios AUTO_INCREMENT = 1");
     }
 
 }

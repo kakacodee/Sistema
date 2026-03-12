@@ -95,7 +95,7 @@ public class FinancasService {
     public void ApagarTudo(){
         financasInterface.deleteAll();
         contaInterface.deleteAll();
-        jdbcTemplate.execute("alter table financas_funcionario AUTO_INCREMENT = 1");
+        jdbcTemplate.execute("alter table financas AUTO_INCREMENT = 1");
     }
     @Transactional
     public void salvarTransacao(Financas financas) {
@@ -114,6 +114,6 @@ public class FinancasService {
         TratarAoDeletar(conta, id, financas);
         contaInterface.save(conta);
         financasInterface.delete(financas);
-        jdbcTemplate.execute("alter table financas_funcionario AUTO_INCREMENT = 1");
+        jdbcTemplate.execute("alter table financas AUTO_INCREMENT = 1");
     }
 }
