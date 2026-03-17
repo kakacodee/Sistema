@@ -28,4 +28,5 @@ public class Tarefas {
     @Getter
     @Setter
     private Status status;
+
 }
