@@ -52,6 +52,7 @@
             <th>Nome</th>
             <th>E-Mail</th>
             <th>Senha</th>
+            <th>Último acesso</th>
             <th>Ações</th>
         </tr>
         </thead>
@@ -61,6 +62,7 @@
             <td th:text="${user.nome}"></td>
             <td th:text="${user.email}"></td>
             <td th:text="${user.senha}"></td>
+            <td th:text="${#temporals.format(user.ultimoLogin, 'dd-MM-yyyy HH:mm')}"></td>
             <td>
                 <a th:href="@{/Usuario/delete/{id}(id=${user.id})}"
                    class="btn btn-danger btn-sm">Deletar</a>

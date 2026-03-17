@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "usuarios")
 public class User {
@@ -26,6 +28,9 @@ public class User {
     @Setter
     @Enumerated(EnumType.ORDINAL)
     private Papel papel;
+    @Getter
+    @Setter
+    private LocalDateTime ultimoLogin;
     public User(){}
     public User(String nome, String senha, String email, Papel papel){
         this.senha = senha;
