@@ -1,27 +1,67 @@
 package dev.java10x.Sistema.Controller;
 
+import dev.java10x.Sistema.Model.Mensagem;
+import dev.java10x.Sistema.Model.Papel;
 import dev.java10x.Sistema.repository.FinancasInterface;
+import dev.java10x.Sistema.repository.MensagemInterface;
+import dev.java10x.Sistema.services.MensagemService;
 import jakarta.persistence.Index;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 
 public class InitialController {
+    private final MensagemInterface mensagemInterface;
+    private final MensagemService mensagemService;
+    public InitialController(MensagemInterface mensagemInterface, MensagemService mensagemService){
+        this.mensagemInterface = mensagemInterface;
+        this.mensagemService = mensagemService;
+    }
     @GetMapping("/index")
-    public String welcome(){
+    public String welcome(Model model){
+
+        model.addAttribute("mensagemGerente", mensagemService.filtrarMensagens(Papel.GERENTE));
+
 
         return "index";
     }
-    @GetMapping("/indexFuncionario")
-    public String welcomeFu(){
+    @PostMapping("/index")
+    public String messageGe(Mensagem mensagem){
+        mensagemService.Mensagens(mensagem);
 
+        return "redirect:/index";
+    }
+    @GetMapping("/indexFuncionario")
+    public String welcomeFu(Model model){
+        model.addAttribute("mensagemFuncionario", mensagemService.filtrarMensagens(Papel.FUNCIONARIO));
         return "indexFuncionario";
     }
-    @GetMapping("/indexFornecedor")
-    public String welcomeFo(){
+    @PostMapping("/indexFuncionario")
+    public String messageFu(Mensagem mensagem){
+        mensagemService.Mensagens(mensagem);
 
+        return "redirect:/indexFuncionario";
+    }
+    @GetMapping("/indexFornecedor")
+    public String welcomeFo(Model model){
+        model.addAttribute("mensagemFornecedor", mensagemService.filtrarMensagens(Papel.FORNECEDOR));
         return "indexFornecedor";
     }
+    @PostMapping("/indexFornecedor")
+    public String messageFo(Mensagem mensagem){
+        mensagemService.Mensagens(mensagem);
+
+        return "redirect:/indexFornecedor";
+    }
 }
+/*
+* @GetMapping("/mensagem/delete/{id}")
+    public String deletarMensagem(@PathVariable Long id) {
+        mensagemInterface.deleteById(id);
+        return "redirect:/indexFuncionario"; // ou /index, /indexFornecedor dependendo da página
+    }
+* */

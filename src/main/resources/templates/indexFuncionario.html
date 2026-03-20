@@ -19,6 +19,45 @@
     </nav>
 </div>
 
+<form th:action="@{/indexFuncionario}" method="post" class="card p-4 shadow-sm mb-5">
+    <div class="mb-3">
+        <label for="papel" class="form-label">Papel</label>
+        <select id="papel" name="papel" class="form-select" required>
+            <option value="FUNCIONARIO">Funcionário</option>
+            <option value="GERENTE">Gerente</option>
+            <option value="FORNECEDOR">Fornecedor</option>
+
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="mensagem" class="form-label">Mensagem:</label>
+        <input type="text" id="mensagem" name="Mensagem" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100">Salvar</button>
+</form>
+
+<h2 class="mb-3">Mensagens</h2>
+<table class="table table-striped table-hover shadow-sm">
+    <thead class="table-dark">
+    <tr>
+        <th>ID</th>
+        <th>Remetente</th>
+        <th>Mensagem</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="mens : ${mensagemFuncionario}">
+        <td th:text="${mens.id}"></td>
+        <td th:text="${mens.papel}"></td>
+        <td th:text="${mens.mensagem}"></td>
+
+        <a th:href="@{/Funcionarios/delete/{id}(id=${func.id})}"
+           class="btn btn-danger btn-sm">Deletar</a>
+        </td>
+    </tr>
+    </tbody>
 <!-- Script correto do Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

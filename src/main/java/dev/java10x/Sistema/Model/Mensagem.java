@@ -12,8 +12,7 @@ public class Mensagem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     @Getter
-    @ManyToOne
-    private User user;
+    private Papel papel;
     @Getter
     @Setter
     private String mensagem;
