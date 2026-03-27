@@ -1,6 +1,7 @@
 package dev.java10x.Sistema.Controller;
 
 import dev.java10x.Sistema.Model.Mensagem;
+import dev.java10x.Sistema.Model.MensagemDTO;
 import dev.java10x.Sistema.Model.Papel;
 import dev.java10x.Sistema.repository.FinancasInterface;
 import dev.java10x.Sistema.repository.MensagemInterface;
@@ -9,6 +10,7 @@ import jakarta.persistence.Index;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,8 +32,8 @@ public class InitialController {
         return "index";
     }
     @PostMapping("/index")
-    public String messageGe(Mensagem mensagem){
-        mensagemService.Mensagens(mensagem);
+    public String messageGe(@ModelAttribute MensagemDTO dto){
+        mensagemService.Mensagens(new Mensagem(dto.getPapel(), dto.getMensagem()));
 
         return "redirect:/index";
     }
@@ -41,8 +43,8 @@ public class InitialController {
         return "indexFuncionario";
     }
     @PostMapping("/indexFuncionario")
-    public String messageFu(Mensagem mensagem){
-        mensagemService.Mensagens(mensagem);
+    public String messageFu(@ModelAttribute MensagemDTO dto){
+        mensagemService.Mensagens(new Mensagem(dto.getPapel(), dto.getMensagem()));
 
         return "redirect:/indexFuncionario";
     }
@@ -52,8 +54,8 @@ public class InitialController {
         return "indexFornecedor";
     }
     @PostMapping("/indexFornecedor")
-    public String messageFo(Mensagem mensagem){
-        mensagemService.Mensagens(mensagem);
+    public String messageFo(@ModelAttribute MensagemDTO dto){
+        mensagemService.Mensagens(new Mensagem(dto.getPapel(), dto.getMensagem()));
 
         return "redirect:/indexFornecedor";
     }

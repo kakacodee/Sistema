@@ -28,8 +28,10 @@ public class SecurityConfig {
                         .permitAll()
                         .successHandler(acessConfig)
                 )
-                .logout(withDefaults());
-
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
+                        .permitAll());
 
         return http.build();
     }

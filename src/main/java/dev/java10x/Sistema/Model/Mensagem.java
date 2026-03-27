@@ -10,11 +10,18 @@ public class Mensagem {
     @Id
     @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     @Getter
+    @Enumerated(EnumType.ORDINAL)
+    @Setter
     private Papel papel;
     @Getter
     @Setter
     private String mensagem;
+    public Mensagem(){}
+    public Mensagem(Papel papel, String mensagem){
+        this.papel = papel;
+        this.mensagem = mensagem;
+    }
 }
 

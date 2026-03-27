@@ -2,7 +2,10 @@ create database Sistema;
 use Sistema;
 show databases;
 select *
-from financas;
+from mensagem
+
+;
+
 TRUNCATE TABLE financas;
 TRUNCATE TABLE conta;
 
@@ -19,6 +22,6 @@ VALUES ('Maria Souza', '$2a$10$Mc0weK1.pMs2K0oA2ABIF.3.CnbWxOuTYeeToaDfoAfs6QZRp
 
 INSERT INTO usuarios (nome, senha, email, papel)
 VALUES ('Carlos Pereira', '$2a$10$kjGH8K4s9mxO89/6RmEkBO9TD4n2G.nPX2ByWBzIaxmxWPB3XOOpC', 'carlos@fornecedor.com', 2);
-select * from financasFuncionario;
+select * from financas_funcionario;
 
 

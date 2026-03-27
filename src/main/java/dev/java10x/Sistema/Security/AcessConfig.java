@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class AcessConfig implements AuthenticationSuccessHandler {
     @Autowired
     private UserInterface userInterface;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse response, Authentication authentication) throws IOException {
         {
