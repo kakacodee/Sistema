@@ -43,14 +43,13 @@
     <thead class="table-dark">
     <tr>
         <th>ID</th>
-        <th>Remetente</th>
+
         <th>Mensagem</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="mens : ${mensagemFuncionario}">
         <td th:text="${mens.id}"></td>
-        <td th:text="${mens.papel}"></td>
         <td th:text="${mens.mensagem}"></td>
 
         <!--<a th:href="@{/Funcionarios/delete/{id}(id=${func.id})}"

@@ -36,10 +36,11 @@ public class TarefasController {
     }
     @GetMapping
     public String listar(Model model){
-        List<Tarefas> emAndamento = tarefasInterface.findByStatus(Status.EM_ANDAMENTO);
-        List<Tarefas> concluido = tarefasInterface.findByStatus(Status.CONCLUIDO);
-        model.addAttribute("emAndamento", emAndamento);
-        model.addAttribute("concluido", concluido);
+        //List<Tarefas> emAndamento = tarefasInterface.findByStatus(Status.EM_ANDAMENTO);
+        //List<Tarefas> concluido = tarefasInterface.findByStatus(Status.CONCLUIDO);
+        tarefasService.ListarTarefas(model);
+        //model.addAttribute("emAndamento", emAndamento);
+        //model.addAttribute("concluido", concluido);
         return "tarefas";
     }
     @GetMapping("/delete/{id}")
