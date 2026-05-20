@@ -43,6 +43,17 @@ public class AcessConfig implements AuthenticationSuccessHandler {
                     user.setUltimoLogin(LocalDateTime.now());
                     userInterface.save(user);
                     response.sendRedirect("/index");
+                    break;
+                case "ROLE_CLIENTE":
+                    name = authentication.getName();
+                    user = userInterface.findByEmail(name).orElseThrow(() -> new RuntimeException("User não encontrado"));
+                    user.setUltimoLogin(LocalDateTime.now());
+                    userInterface.save(user);
+                    response.sendRedirect("/telaCliente");
+                    break;
+                default:
+                    response.sendRedirect("/telaCliente");
+                    break;
             }
         }
     }

@@ -20,23 +20,25 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/cadastro").permitAll()
-                                .anyRequest().authenticated())
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .permitAll()
-                        .successHandler(acessConfig)
+                .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/", "/telaCliente", "/cadastro").permitAll()
+                    .requestMatchers("/indexFornecedor").hasRole("FORNECEDOR")
+                    .requestMatchers("/indexFuncionario").hasRole("FUNCIONARIO")
+                    .requestMatchers("/index").hasRole("GERENTE")
+                    .anyRequest().authenticated()
                 )
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login")
-                        .permitAll());
-
+                .formLogin(form -> form
+                    .loginPage("/login")
+                        .defaultSuccessUrl("/telaCliente", true)
+                    .successHandler(acessConfig)
+                    .permitAll()
+                )
+                    .logout(logout  -> logout.permitAll());
         return http.build();
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 }

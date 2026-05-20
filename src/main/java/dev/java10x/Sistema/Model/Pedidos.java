@@ -6,9 +6,9 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "pedidos")
-
 public class Pedidos {
     @Getter
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     @Getter

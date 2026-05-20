@@ -5,6 +5,7 @@ import dev.java10x.Sistema.Model.MensagemDTO;
 import dev.java10x.Sistema.Model.Papel;
 import dev.java10x.Sistema.repository.FinancasInterface;
 import dev.java10x.Sistema.repository.MensagemInterface;
+import dev.java10x.Sistema.repository.Produtointerface;
 import dev.java10x.Sistema.services.MensagemService;
 import jakarta.persistence.Index;
 import org.springframework.stereotype.Controller;
@@ -19,9 +20,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class InitialController {
     private final MensagemInterface mensagemInterface;
     private final MensagemService mensagemService;
-    public InitialController(MensagemInterface mensagemInterface, MensagemService mensagemService){
+    private final Produtointerface produtointerface;
+    public InitialController(MensagemInterface mensagemInterface, MensagemService mensagemService, Produtointerface produtointerface){
         this.mensagemInterface = mensagemInterface;
         this.mensagemService = mensagemService;
+        this.produtointerface = produtointerface;
+    }
+    @GetMapping("/")
+    public String Cliente(Model model){
+        model.addAttribute("produtos", produtointerface.findAll());
+        return "telaCliente";
     }
     @GetMapping("/index")
     public String welcome(Model model){
